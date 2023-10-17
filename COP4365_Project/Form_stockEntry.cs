@@ -13,66 +13,68 @@ namespace COP4365_Project
 {
     public partial class Form_stockEntry : Form
     {
+        // Private static variable for defining the format of the CSV file headers
+        private static String referenceHeaderString = "\"Ticker\",\"Period\",\"Date\",\"Open\",\"High\",\"Low\",\"Close\",\"Volume\"";
+        
         // Private BindingList of each Candlestick object, that other objects can bind to when the list changes
         private BindingList<Candlestick> candlesticks {  get; set; }
 
         // Private temporary list for initial loading of stock data with memory allocation set to 1024 as most CSV files are in this range
         private List<Candlestick> tempList = new List<Candlestick>(1024);
+
+        // Public member function that initializes the entire form object
         public Form_stockEntry()
         {
             InitializeComponent();
         }
 
+        private List<Candlestick> loadCandlesticks(string filename)
+        {
+            // Declare local list to return
+            List<Candlestick> resultingList = new List<Candlestick>(1024);
+
+            // Use stream reader to read in file data
+            using (StreamReader sr = new StreamReader(filename))
+            {
+                // Variable to store each CSV line of data
+                string line;
+
+                // First read the CSV header
+                string header = sr.ReadLine();
+
+                // If the header is correct
+                if (header == referenceHeaderString)
+                {
+                    // Read in the CSV file line by line
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        // Instantiate new candlestick
+                        Candlestick cs = new Candlestick(line);
+
+                        // Add it to the temporary list
+                        resultingList.Add(cs);
+                    }
+                    // Make templist in chronological order
+                    resultingList.Reverse();
+                }
+            }
+
+            // Return the resulting list
+            return resultingList;
+        }
+
         // Private member function that executes when loadStocks button is clicked
         private void button_loadStocks_Click(object sender, EventArgs e)
         {
-            // Show the openFileDialog so user can select a stock and ensure a file is selected
+            // Show the openFileDialog so the user can select a stock to load
             DialogResult result = openFileDialog_stockLoader.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                // Declare variables to store the selected file name and header format of the CSV files
-                String fn = openFileDialog_stockLoader.FileName;
-                Text = fn;
-                String referenceString = "\"Ticker\",\"Period\",\"Date\",\"Open\",\"High\",\"Low\",\"Close\",\"Volume\"";
 
+            // Call function that filters the candlesticks based on the user selected dates
+            filterCandlesticks();
 
-                // try multiselect and clear old data
-                string[] filenames = openFileDialog_stockLoader.FileNames;
-                tempList.Clear();
-
-                // Use stream reader to read in file data
-                using (StreamReader sr = new StreamReader(fn))
-                {
-                    // Variable to store each CSV line of data
-                    string line;
-
-                    // First read the CSV header
-                    string header = sr.ReadLine();
-
-                    // If the header is correct
-                    if (header == referenceString)
-                    {
-                        // Read in the CSV file line by line
-                        while ((line = sr.ReadLine()) != null)
-                        {
-                            // Instantiate new candlestick
-                            Candlestick cs = new Candlestick(line);
-
-                            // Add it to the temporary list
-                            tempList.Add(cs);
-                        }
-                        // Make templist in chronological order
-                        tempList.Reverse();
-
-                        // Call function that filters the candlesticks based on the user selected dates
-                        filterCandlesticks();
-
-                        // Clear the old chart title and set it to the currently selected path
-                        chart_candlesticks.Titles.Clear();
-                        chart_candlesticks.Titles.Add(Path.GetFileNameWithoutExtension(openFileDialog_stockLoader.FileName));
-                    }
-                }
-            }
+            // Clear the old chart title and set it to the currently selected path
+            chart_candlesticks.Titles.Clear();
+            chart_candlesticks.Titles.Add(Path.GetFileNameWithoutExtension(openFileDialog_stockLoader.FileName));
         }
 
         // Private member function to filter the candlesticks based on user selected dates
@@ -110,6 +112,13 @@ namespace COP4365_Project
         {
             // Call the function that filters out the candlesticks based on the current user selected dates
             filterCandlesticks();
+        }
+
+        // Private member function called when a file is selected in the openFileDialog
+        private void openFileDialog_stockLoader_FileOk(object sender, CancelEventArgs e)
+        {
+           // Set tempList to the newly loaded in file
+           tempList = loadCandlesticks(openFileDialog_stockLoader.FileName);
         }
     }
 }

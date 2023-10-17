@@ -36,6 +36,13 @@
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.openFileDialog_stockLoader = new System.Windows.Forms.OpenFileDialog();
             this.dataGridView_stockData = new System.Windows.Forms.DataGridView();
+            this.openDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.closeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.highDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lowDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.volumeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.candlestickBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.chart_candlesticks = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.dateTimePicker_startDate = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker_endDate = new System.Windows.Forms.DateTimePicker();
@@ -43,16 +50,9 @@
             this.button_updateChart = new System.Windows.Forms.Button();
             this.label_startDate = new System.Windows.Forms.Label();
             this.label_endDate = new System.Windows.Forms.Label();
-            this.candlestickBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.openDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.closeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.highDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lowDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.volumeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_stockData)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart_candlesticks)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.candlestickBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_candlesticks)).BeginInit();
             this.SuspendLayout();
             // 
             // openFileDialog_stockLoader
@@ -60,6 +60,7 @@
             this.openFileDialog_stockLoader.Filter = "All Stock files| *.csv|Daily Stocks|*-Day.csv|Weekly Stocks|*-Week.csv|Monthly St" +
     "ocks|*-Month.csv";
             this.openFileDialog_stockLoader.InitialDirectory = "..\\..\\..\\..\\Stock Data";
+            this.openFileDialog_stockLoader.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog_stockLoader_FileOk);
             // 
             // dataGridView_stockData
             // 
@@ -77,6 +78,46 @@
             this.dataGridView_stockData.Name = "dataGridView_stockData";
             this.dataGridView_stockData.Size = new System.Drawing.Size(660, 178);
             this.dataGridView_stockData.TabIndex = 0;
+            // 
+            // openDataGridViewTextBoxColumn
+            // 
+            this.openDataGridViewTextBoxColumn.DataPropertyName = "open";
+            this.openDataGridViewTextBoxColumn.HeaderText = "open";
+            this.openDataGridViewTextBoxColumn.Name = "openDataGridViewTextBoxColumn";
+            // 
+            // closeDataGridViewTextBoxColumn
+            // 
+            this.closeDataGridViewTextBoxColumn.DataPropertyName = "close";
+            this.closeDataGridViewTextBoxColumn.HeaderText = "close";
+            this.closeDataGridViewTextBoxColumn.Name = "closeDataGridViewTextBoxColumn";
+            // 
+            // highDataGridViewTextBoxColumn
+            // 
+            this.highDataGridViewTextBoxColumn.DataPropertyName = "high";
+            this.highDataGridViewTextBoxColumn.HeaderText = "high";
+            this.highDataGridViewTextBoxColumn.Name = "highDataGridViewTextBoxColumn";
+            // 
+            // lowDataGridViewTextBoxColumn
+            // 
+            this.lowDataGridViewTextBoxColumn.DataPropertyName = "low";
+            this.lowDataGridViewTextBoxColumn.HeaderText = "low";
+            this.lowDataGridViewTextBoxColumn.Name = "lowDataGridViewTextBoxColumn";
+            // 
+            // volumeDataGridViewTextBoxColumn
+            // 
+            this.volumeDataGridViewTextBoxColumn.DataPropertyName = "volume";
+            this.volumeDataGridViewTextBoxColumn.HeaderText = "volume";
+            this.volumeDataGridViewTextBoxColumn.Name = "volumeDataGridViewTextBoxColumn";
+            // 
+            // dateDataGridViewTextBoxColumn
+            // 
+            this.dateDataGridViewTextBoxColumn.DataPropertyName = "date";
+            this.dateDataGridViewTextBoxColumn.HeaderText = "date";
+            this.dateDataGridViewTextBoxColumn.Name = "dateDataGridViewTextBoxColumn";
+            // 
+            // candlestickBindingSource
+            // 
+            this.candlestickBindingSource.DataSource = typeof(COP4365_Project.Candlestick);
             // 
             // chart_candlesticks
             // 
@@ -175,46 +216,6 @@
             this.label_endDate.TabIndex = 7;
             this.label_endDate.Text = "Select End Date:";
             // 
-            // candlestickBindingSource
-            // 
-            this.candlestickBindingSource.DataSource = typeof(COP4365_Project.Candlestick);
-            // 
-            // openDataGridViewTextBoxColumn
-            // 
-            this.openDataGridViewTextBoxColumn.DataPropertyName = "open";
-            this.openDataGridViewTextBoxColumn.HeaderText = "open";
-            this.openDataGridViewTextBoxColumn.Name = "openDataGridViewTextBoxColumn";
-            // 
-            // closeDataGridViewTextBoxColumn
-            // 
-            this.closeDataGridViewTextBoxColumn.DataPropertyName = "close";
-            this.closeDataGridViewTextBoxColumn.HeaderText = "close";
-            this.closeDataGridViewTextBoxColumn.Name = "closeDataGridViewTextBoxColumn";
-            // 
-            // highDataGridViewTextBoxColumn
-            // 
-            this.highDataGridViewTextBoxColumn.DataPropertyName = "high";
-            this.highDataGridViewTextBoxColumn.HeaderText = "high";
-            this.highDataGridViewTextBoxColumn.Name = "highDataGridViewTextBoxColumn";
-            // 
-            // lowDataGridViewTextBoxColumn
-            // 
-            this.lowDataGridViewTextBoxColumn.DataPropertyName = "low";
-            this.lowDataGridViewTextBoxColumn.HeaderText = "low";
-            this.lowDataGridViewTextBoxColumn.Name = "lowDataGridViewTextBoxColumn";
-            // 
-            // volumeDataGridViewTextBoxColumn
-            // 
-            this.volumeDataGridViewTextBoxColumn.DataPropertyName = "volume";
-            this.volumeDataGridViewTextBoxColumn.HeaderText = "volume";
-            this.volumeDataGridViewTextBoxColumn.Name = "volumeDataGridViewTextBoxColumn";
-            // 
-            // dateDataGridViewTextBoxColumn
-            // 
-            this.dateDataGridViewTextBoxColumn.DataPropertyName = "date";
-            this.dateDataGridViewTextBoxColumn.HeaderText = "date";
-            this.dateDataGridViewTextBoxColumn.Name = "dateDataGridViewTextBoxColumn";
-            // 
             // Form_stockEntry
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -231,8 +232,8 @@
             this.Name = "Form_stockEntry";
             this.Text = "Stock Analysis Form";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_stockData)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart_candlesticks)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.candlestickBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_candlesticks)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
