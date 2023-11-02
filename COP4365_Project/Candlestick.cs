@@ -8,7 +8,7 @@ using System.Windows.Forms.VisualStyles;
 namespace COP4365_Project
 {
     // Class to represent each Candlestick object
-    internal class Candlestick
+    public class Candlestick
     {
         public Decimal open { get; set; }   // Public member to store stock open price
         public Decimal high { get; set; }   // Public member to store stock high price

@@ -16,7 +16,7 @@ namespace COP4365_Project
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form_stockEntry());
+            Application.Run(new Form_stockLoader());
         }
     }
 }
