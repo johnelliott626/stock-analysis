@@ -38,9 +38,7 @@
             // 
             // label_endDate
             // 
-            this.label_endDate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_endDate.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label_endDate.AutoSize = true;
             this.label_endDate.Location = new System.Drawing.Point(220, 17);
             this.label_endDate.Name = "label_endDate";
@@ -50,9 +48,7 @@
             // 
             // label_startDate
             // 
-            this.label_startDate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_startDate.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label_startDate.AutoSize = true;
             this.label_startDate.Location = new System.Drawing.Point(16, 17);
             this.label_startDate.Name = "label_startDate";
@@ -62,9 +58,7 @@
             // 
             // button_loadStocks
             // 
-            this.button_loadStocks.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_loadStocks.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.button_loadStocks.Location = new System.Drawing.Point(176, 73);
             this.button_loadStocks.Name = "button_loadStocks";
             this.button_loadStocks.Size = new System.Drawing.Size(84, 41);
@@ -75,9 +69,7 @@
             // 
             // dateTimePicker_endDate
             // 
-            this.dateTimePicker_endDate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateTimePicker_endDate.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.dateTimePicker_endDate.Location = new System.Drawing.Point(223, 33);
             this.dateTimePicker_endDate.Name = "dateTimePicker_endDate";
             this.dateTimePicker_endDate.Size = new System.Drawing.Size(186, 20);
@@ -85,9 +77,7 @@
             // 
             // dateTimePicker_startDate
             // 
-            this.dateTimePicker_startDate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateTimePicker_startDate.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.dateTimePicker_startDate.Location = new System.Drawing.Point(19, 33);
             this.dateTimePicker_startDate.Name = "dateTimePicker_startDate";
             this.dateTimePicker_startDate.Size = new System.Drawing.Size(186, 20);

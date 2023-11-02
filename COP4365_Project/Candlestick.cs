@@ -17,6 +17,17 @@ namespace COP4365_Project
         public long volume { get; set; }    // Public member to store stock trade volume
         public DateTime date { get; set; }  // Public member to store date of candlestick
 
+        // Default Constructor
+        public Candlestick() 
+        { 
+            date = DateTime.Now;
+            open = new Decimal(0);
+            high = new Decimal(0);
+            low = new Decimal(0);
+            close = new Decimal(0);
+            volume = 0;
+        }
+
         // Constructor with input arguments to initialize class members, each set to a default of zero
         public Candlestick(DateTime date, Decimal open = 0, Decimal high = 0, Decimal low = 0, Decimal close = 0, long volume = 0)
         {

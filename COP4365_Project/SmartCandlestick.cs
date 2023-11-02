@@ -30,6 +30,28 @@ namespace COP4365_Project
         // Class constructor that will initialize base class members based on an input row of data
         public SmartCandlestick(string rowOfData) : base(rowOfData)
         {
+            setSmartProperties();
+
+        }
+
+        // Private member helper function to set each "Smart" Candlestick higher level property
+        private void setSmartProperties()
+        {
+            // Compute each higher level Candlestick property based on Candlestick values
+            range = high - low;
+            bodyRange = Math.Abs(open - close);
+            topPrice = Math.Max(open, close);
+            bottomPrice = Math.Min(open, close);
+            topTail = high - topPrice;
+            bottomTail = bottomPrice - low;
+        }
+
+        // Private member helper function to set each single candlestick pattern
+        private void setCandlestickPatterns()
+        {
+            isBullish = close > open;
+            isBearish = close < open;
+
         }
     }
 }

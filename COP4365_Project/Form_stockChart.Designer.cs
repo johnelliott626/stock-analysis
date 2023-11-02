@@ -115,6 +115,7 @@
             // 
             // button_updateChart
             // 
+            this.button_updateChart.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.button_updateChart.Location = new System.Drawing.Point(399, 68);
             this.button_updateChart.Name = "button_updateChart";
             this.button_updateChart.Size = new System.Drawing.Size(83, 40);
