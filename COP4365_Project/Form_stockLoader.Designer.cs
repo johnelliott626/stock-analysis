@@ -100,6 +100,7 @@
     "ocks|*-Month.csv";
             this.openFileDialog_stockLoader.InitialDirectory = "..\\..\\..\\..\\Stock Data";
             this.openFileDialog_stockLoader.Multiselect = true;
+            this.openFileDialog_stockLoader.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog_stockLoader_FileOk);
             // 
             // Form_stockLoader
             // 

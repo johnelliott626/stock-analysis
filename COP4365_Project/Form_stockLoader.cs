@@ -27,19 +27,6 @@ namespace COP4365_Project
         {
             // Show the openFileDialog so the user can select a stock to load
             DialogResult result = openFileDialog_stockLoader.ShowDialog();
-
-            if (result == DialogResult.OK) 
-            {
-                // Iterate over each selected Stock File
-                foreach (string filePath in openFileDialog_stockLoader.FileNames)
-                {
-                    // For each file, load the file into a list of Candlesticks and create a stockChart form
-                    List<Candlestick> unfilteredCandlesticksList = loadCandlesticks(filePath);
-                    Form_stockChart currentChart = new Form_stockChart(filePath, unfilteredCandlesticksList, dateTimePicker_startDate.Value, dateTimePicker_endDate.Value);
-                    currentChart.Show();
-                }
-                
-            }
         }
 
         // Private member helper function to load each candlestick in a file into a list of Candlestick objects
@@ -77,6 +64,17 @@ namespace COP4365_Project
             // Return the resulting list
             return resultingList;
         }
-        
+
+        private void openFileDialog_stockLoader_FileOk(object sender, CancelEventArgs e)
+        {
+            OpenFileDialog openFileDialog = (OpenFileDialog)sender;
+            foreach (string filePath in openFileDialog.FileNames)
+            {
+                // For each file, load the file into a list of Candlesticks and create a stockChart form
+                List<Candlestick> unfilteredCandlesticksList = loadCandlesticks(filePath);
+                Form_stockChart currentChart = new Form_stockChart(filePath, unfilteredCandlesticksList, dateTimePicker_startDate.Value, dateTimePicker_endDate.Value);
+                currentChart.Show();
+            }
+        }
     }
 }
