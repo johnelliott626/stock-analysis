@@ -28,6 +28,18 @@ namespace COP4365_Project
             volume = 0;
         }
 
+        // Copy Constructor
+        public Candlestick(Candlestick candlestick)
+        {
+            // Set each instance member by "copying" the members of the input Candlestick object
+            this.date = candlestick.date;
+            this.open = candlestick.open;
+            this.high = candlestick.high;
+            this.low = candlestick.low;
+            this.close = candlestick.close;
+            this.volume = candlestick.volume;
+        }
+
         // Constructor with input arguments to initialize class members, each set to a default of zero
         public Candlestick(DateTime date, Decimal open = 0, Decimal high = 0, Decimal low = 0, Decimal close = 0, long volume = 0)
         {
