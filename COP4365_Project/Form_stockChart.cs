@@ -14,6 +14,8 @@ namespace COP4365_Project
 {
     public partial class Form_stockChart : Form_stockLoader
     {
+        // Static list of all single Candlestick patterns
+        private static List<string> candlestickPatterns = new List<string>{"None", "Bullish", "Bearish", "Neutral", "Marubozu", "Doji", "DragonFly Doji", "Gravestone Doji", "Hammer", "Inverted Hammer"};
         // Private BindingList of each SmartCandlestick object, that other objects can bind to when the list changes
         private BindingList<SmartCandlestick> filteredSmartCandlesticksList {  get; set; }
 
@@ -49,6 +51,8 @@ namespace COP4365_Project
             // Set the chart title name
             chart_candlesticks.Titles.Add(Path.GetFileNameWithoutExtension(filePath));
 
+            // Set the combo box source
+            comboBox_selectPattern.DataSource = candlestickPatterns;
 
             // Call the filterCandlesticks function to filter the candlesticks by date and set the chart data source
             filterCandlesticks();
@@ -61,7 +65,8 @@ namespace COP4365_Project
             // Call the function that filters out the candlesticks based on the current user selected dates
             filterCandlesticks();
 
-            AnnotateCandlestick(chart_candlesticks.Series["Series_OHLC"].Points[0], 2, "hello");
+            // Change the selected pattern to "None"
+            comboBox_selectPattern.SelectedIndex = 0;
         }
 
         // Private member function to filter the candlesticks based on user selected dates
@@ -91,32 +96,100 @@ namespace COP4365_Project
             chart_candlesticks.DataBind();
         }
 
-        private void AnnotateCandlestick(DataPoint dataPoint, double indexOfPoint, string annotationText)
+        // Private member function that annotated a specified candlestick
+        private void annotateCandlestick(int indexOfPoint, SmartCandlestick scs)
         {
-            chart_candlesticks.Annotations.Clear();
-
-            // Create a rectangle annotation
+            // Create a rectangle annotation and arrow annotation
             RectangleAnnotation annotation = new RectangleAnnotation();
+            ArrowAnnotation arrowAnnotation = new ArrowAnnotation();
 
-            double height = chart_candlesticks.ChartAreas["ChartArea_OHLC"].AxisY.Maximum * 1.05;
-            // Set the annotation position and size based on the candlestick
+            
+            // Set the rectangle annotation position and size to outline the specific Candlestick
             annotation.AxisX = chart_candlesticks.ChartAreas["ChartArea_OHLC"].AxisX;
             annotation.AxisY = chart_candlesticks.ChartAreas["ChartArea_OHLC"].AxisY;
             annotation.IsSizeAlwaysRelative = false;
-            annotation.Width = 1;
-            annotation.X = indexOfPoint + .5; // Adjust the position based on your requirements
-            // high, low, open, close
-            annotation.Y = dataPoint.YValues[0] + (dataPoint.YValues[0] - dataPoint.YValues[1]); // Adjust the position based on your requirements
-            //annotation.Width = chart_candlesticks.Series["Series_OHLC"].MarkerSize; // Adjust the size based on your requirements
-            //annotation.Height = 10; // Adjust the size based on your requirements
+            annotation.Height = (double)scs.bodyRange;
+            annotation.Width = .8;
+            annotation.X = indexOfPoint + .6;
+            annotation.Y = (double)scs.bottomPrice;
 
-            // Set the annotation style
-            annotation.Text = "Marubozu";
-            annotation.LineDashStyle = ChartDashStyle.Dash;
-            annotation.LineWidth = 2;
+            // Set the rectangle annotation style
+            annotation.BackColor = Color.Transparent;
+            annotation.LineColor = Color.Blue;
 
-            // Add the annotation to the chart
+            
+            // Set the arrow annotation position to point to the top of the specific Candlestick
+            arrowAnnotation.AxisX = chart_candlesticks.ChartAreas["ChartArea_OHLC"].AxisX;
+            arrowAnnotation.AxisY = chart_candlesticks.ChartAreas["ChartArea_OHLC"].AxisY;
+            arrowAnnotation.IsSizeAlwaysRelative = false;
+            arrowAnnotation.Height = 10000;
+            arrowAnnotation.X = indexOfPoint + 1;
+            arrowAnnotation.Y = (double)scs.high * 1.01;
+            arrowAnnotation.Width = 1;
+            arrowAnnotation.LineColor = Color.Blue;
+
+            // Add the annotations to the chart
             chart_candlesticks.Annotations.Add(annotation);
+            chart_candlesticks.Annotations.Add(arrowAnnotation);
+        }
+
+        // Private membert that annotated the corresponding Candlesticks when a pattern is selected or changed
+        private void comboBox_selectPattern_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // First clear all the old annotations
+            chart_candlesticks.Annotations.Clear();
+
+            // if the selected pattern is not "None" which is at index 0
+            if (comboBox_selectPattern.SelectedIndex != 0)
+            {
+                int selectedPatternIndex = comboBox_selectPattern.SelectedIndex;
+
+                for (int i = 0; i < filteredSmartCandlesticksList.Count; i++)
+                {
+                    // Declare variables to track if the candlestick is the selected pattern and store the current candlestick
+                    bool isPattern = false;
+                    SmartCandlestick currentCS = filteredSmartCandlesticksList[i];
+
+                    // Find the boolean value of the current candlestick based on the selected pattern
+                    switch(selectedPatternIndex)
+                    {
+                        case 1:
+                            isPattern = currentCS.isBullish;
+                            break;
+                        case 2:
+                            isPattern = currentCS.isBearish;
+                            break;
+                        case 3:
+                            isPattern = currentCS.isNeutral;
+                            break;
+                        case 4:
+                            isPattern = currentCS.isMarubozu;
+                            break;
+                        case 5:
+                            isPattern = currentCS.isDoji;
+                            break;
+                        case 6:
+                            isPattern = currentCS.isDragonFlyDoji;
+                            break;
+                        case 7:
+                            isPattern = currentCS.isGravestoneDoji;
+                            break;
+                        case 8:
+                            isPattern = currentCS.isHammer;
+                            break;
+                        case 9:
+                            isPattern = currentCS.isInvertedHammer;
+                            break;
+                    }
+
+                    // If the current candlestick is the selected pattern, then annotate it
+                    if (isPattern)
+                    {
+                        annotateCandlestick(i, currentCS);
+                    }
+                }   
+            }
+            
         }
     }
 }

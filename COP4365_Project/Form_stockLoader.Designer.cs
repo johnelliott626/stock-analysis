@@ -82,7 +82,7 @@
             this.dateTimePicker_startDate.Name = "dateTimePicker_startDate";
             this.dateTimePicker_startDate.Size = new System.Drawing.Size(186, 20);
             this.dateTimePicker_startDate.TabIndex = 8;
-            this.dateTimePicker_startDate.Value = new System.DateTime(2013, 11, 1, 15, 2, 0, 0);
+            this.dateTimePicker_startDate.Value = new System.DateTime(2022, 11, 1, 15, 2, 0, 0);
             // 
             // openFileDialog_stockLoader
             // 

@@ -8,7 +8,6 @@ namespace COP4365_Project
 {
     internal class SmartCandlestick : Candlestick
     {
-        private const Decimal leeway = 0.03M; // Private const member that defines a leeway percentage for evaluating Candlestick patterns
         public Decimal range {  get; set; } // Public member to store Candlestick range
         public Decimal bodyRange { get; set; } // Public member to store Candlestick body range
         public Decimal topPrice { get; set; } // Public memeber to store Candlestick top price
@@ -56,26 +55,26 @@ namespace COP4365_Project
             isBearish = close < open;
 
             // Calculate if candlestick is Neutral
-            // Check if upper or lower tail is within 3% (leeway) of whichever tail if larger
+            // Check if upper or lower tail is within 20% of whichever tail if larger
             if (topTail > bottomTail) 
             {
-                Decimal neutralRange = topTail * leeway;   // range is 3% (leeway) of topTail
-                isNeutral = bottomTail >= (topTail - neutralRange);    // Neutral if bottomTail is within 3% of topTail
+                Decimal neutralRange = topTail * .20M;   
+                isNeutral = bottomTail >= (topTail - neutralRange);    // Neutral if bottomTail is within 20% of topTail
             }
             else
             {
-                Decimal neutralRange = bottomTail * leeway;    // range if 3% (leeway) of bottomTail
-                isNeutral = topTail >= (bottomTail - neutralRange);    // Neutral if topTail is within 3% of bottomTail
+                Decimal neutralRange = bottomTail * .20M;    
+                isNeutral = topTail >= (bottomTail - neutralRange);    // Neutral if topTail is within 20% of bottomTail
             }
 
             // Calculate if candlestick is Marubozu
-            // Check if the bodyRange is within 10% of the range
-            Decimal marubozuRange = range * .10M;
+            // Check if the bodyRange is within 12.5% of the range
+            Decimal marubozuRange = range * .125M;
             isMarubozu = bodyRange >= (range - marubozuRange);
 
             // Calculate if candlestick is Doji
-            // Check if the bottomPrice is within 3% (leeway) of the topPrice
-            Decimal dojiRange = topPrice * leeway;
+            // Check if the bottomPrice is within 1% of the topPrice
+            Decimal dojiRange = topPrice * .01M;
             isDoji = bottomPrice >= (topPrice - dojiRange);
             
 
@@ -83,8 +82,8 @@ namespace COP4365_Project
             // First check if the candlestick is a doiji
             if (isDoji)
             {
-                // Check if the candlestick body is within the top (dragonfly) or bottom (graveston) 20% of the total candlestick range 
-                Decimal specificDojiRange = range * .20M;
+                // Check if the candlestick body is within the top (dragonfly) or bottom (gravestone) 25% of the total candlestick range 
+                Decimal specificDojiRange = range * .25M;
                 isDragonFlyDoji = bottomPrice >= (high - specificDojiRange);
                 isGravestoneDoji = topPrice <= (low + specificDojiRange);
             }
@@ -95,9 +94,9 @@ namespace COP4365_Project
             }
 
             // Calculate if candlestick is a hammer or inverted hammer
-            // Calculate if candlestick bodyRange length is between 20%-35% of total range length 
-            Decimal hammerLowerBound = range * .20M;
-            Decimal hammerUpperBound = range * .35M;
+            // Calculate if candlestick bodyRange length is between 25%-50% of total range length 
+            Decimal hammerLowerBound = range * .25M;
+            Decimal hammerUpperBound = range * .50M;
             if (bodyRange >= hammerLowerBound && bodyRange <= hammerUpperBound)
             {
                 // calculate if the top or bottom tail is within 10% of the total range length

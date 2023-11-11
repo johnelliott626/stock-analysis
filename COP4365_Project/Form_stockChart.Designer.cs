@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.RectangleAnnotation rectangleAnnotation1 = new System.Windows.Forms.DataVisualization.Charting.RectangleAnnotation();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
@@ -39,7 +38,8 @@
             this.candlestickBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.button_updateChart = new System.Windows.Forms.Button();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox_selectPattern = new System.Windows.Forms.ComboBox();
+            this.label_selectPattern = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chart_candlesticks)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.candlestickBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
@@ -71,18 +71,6 @@
             this.chart_candlesticks.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            rectangleAnnotation1.AxisXName = "ChartArea_OHLC\\rX";
-            rectangleAnnotation1.BackColor = System.Drawing.Color.Transparent;
-            rectangleAnnotation1.IsSizeAlwaysRelative = false;
-            rectangleAnnotation1.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            rectangleAnnotation1.LineWidth = 2;
-            rectangleAnnotation1.Name = "RectangleAnnotation1";
-            rectangleAnnotation1.Text = "Doji";
-            rectangleAnnotation1.Width = 1D;
-            rectangleAnnotation1.X = 0.5D;
-            rectangleAnnotation1.Y = 100D;
-            rectangleAnnotation1.YAxisName = "ChartArea_OHLC\\rY";
-            this.chart_candlesticks.Annotations.Add(rectangleAnnotation1);
             chartArea1.AlignWithChartArea = "ChartArea_Volume";
             chartArea1.AxisX.Title = "Date";
             chartArea1.AxisY.Title = "Price";
@@ -143,20 +131,34 @@
             this.fileSystemWatcher1.EnableRaisingEvents = true;
             this.fileSystemWatcher1.SynchronizingObject = this;
             // 
-            // comboBox1
+            // comboBox_selectPattern
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(510, 68);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 14;
+            this.comboBox_selectPattern.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.comboBox_selectPattern.FormattingEnabled = true;
+            this.comboBox_selectPattern.Location = new System.Drawing.Point(445, 87);
+            this.comboBox_selectPattern.Name = "comboBox_selectPattern";
+            this.comboBox_selectPattern.Size = new System.Drawing.Size(130, 21);
+            this.comboBox_selectPattern.TabIndex = 14;
+            this.comboBox_selectPattern.Text = "None";
+            this.comboBox_selectPattern.SelectedIndexChanged += new System.EventHandler(this.comboBox_selectPattern_SelectedIndexChanged);
+            // 
+            // label_selectPattern
+            // 
+            this.label_selectPattern.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label_selectPattern.AutoSize = true;
+            this.label_selectPattern.Location = new System.Drawing.Point(442, 68);
+            this.label_selectPattern.Name = "label_selectPattern";
+            this.label_selectPattern.Size = new System.Drawing.Size(133, 13);
+            this.label_selectPattern.TabIndex = 15;
+            this.label_selectPattern.Text = "Select Pattern to Highlight:";
             // 
             // Form_stockChart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(878, 467);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.label_selectPattern);
+            this.Controls.Add(this.comboBox_selectPattern);
             this.Controls.Add(this.button_updateChart);
             this.Controls.Add(this.chart_candlesticks);
             this.Name = "Form_stockChart";
@@ -168,7 +170,8 @@
             this.Controls.SetChildIndex(this.button_updateChart, 0);
             this.Controls.SetChildIndex(this.dateTimePicker_startDate, 0);
             this.Controls.SetChildIndex(this.dateTimePicker_endDate, 0);
-            this.Controls.SetChildIndex(this.comboBox1, 0);
+            this.Controls.SetChildIndex(this.comboBox_selectPattern, 0);
+            this.Controls.SetChildIndex(this.label_selectPattern, 0);
             ((System.ComponentModel.ISupportInitialize)(this.chart_candlesticks)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.candlestickBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
@@ -182,7 +185,8 @@
         private System.Windows.Forms.Button button_updateChart;
         private System.Windows.Forms.BindingSource candlestickBindingSource;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox_selectPattern;
+        private System.Windows.Forms.Label label_selectPattern;
     }
 }
 
