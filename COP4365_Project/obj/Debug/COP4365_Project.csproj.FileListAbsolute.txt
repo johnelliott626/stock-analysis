@@ -8,14 +8,3 @@ C:\Users\John Elliott\Desktop\Software System Development\COP4365_Project\COP436
 C:\Users\John Elliott\Desktop\Software System Development\COP4365_Project\COP4365_Project\obj\Debug\COP4365_Project.csproj.CoreCompileInputs.cache
 C:\Users\John Elliott\Desktop\Software System Development\COP4365_Project\COP4365_Project\obj\Debug\COP4365_Project.exe
 C:\Users\John Elliott\Desktop\Software System Development\COP4365_Project\COP4365_Project\obj\Debug\COP4365_Project.pdb
-C:\Users\John Elliott\Desktop\Software System Development\COP4365_Project 2\COP4365_Project\bin\Debug\COP4365_Project.exe.config
-C:\Users\John Elliott\Desktop\Software System Development\COP4365_Project 2\COP4365_Project\bin\Debug\COP4365_Project.exe
-C:\Users\John Elliott\Desktop\Software System Development\COP4365_Project 2\COP4365_Project\bin\Debug\COP4365_Project.pdb
-C:\Users\John Elliott\Desktop\Software System Development\COP4365_Project 2\COP4365_Project\obj\Debug\COP4365_Project.csproj.AssemblyReference.cache
-C:\Users\John Elliott\Desktop\Software System Development\COP4365_Project 2\COP4365_Project\obj\Debug\COP4365_Project.Properties.Resources.resources
-C:\Users\John Elliott\Desktop\Software System Development\COP4365_Project 2\COP4365_Project\obj\Debug\COP4365_Project.csproj.GenerateResource.cache
-C:\Users\John Elliott\Desktop\Software System Development\COP4365_Project 2\COP4365_Project\obj\Debug\COP4365_Project.csproj.CoreCompileInputs.cache
-C:\Users\John Elliott\Desktop\Software System Development\COP4365_Project 2\COP4365_Project\obj\Debug\COP4365_Project.exe
-C:\Users\John Elliott\Desktop\Software System Development\COP4365_Project 2\COP4365_Project\obj\Debug\COP4365_Project.pdb
-C:\Users\John Elliott\Desktop\Software System Development\COP4365_Project 2\COP4365_Project\obj\Debug\COP4365_Project.Form_stockChart.resources
-C:\Users\John Elliott\Desktop\Software System Development\COP4365_Project 2\COP4365_Project\obj\Debug\COP4365_Project.Form_stockLoader.resources
