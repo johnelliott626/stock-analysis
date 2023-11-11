@@ -30,6 +30,7 @@ namespace COP4365_Project
         // Class constructor that will initialize base class members based on an input of the base class "Candlestick"
         public SmartCandlestick(Candlestick candlestick) : base(candlestick)
         {
+            // Call functions to set SmartProperties and then the pattern properties
             setSmartProperties();
             setCandlestickPatterns();
         }

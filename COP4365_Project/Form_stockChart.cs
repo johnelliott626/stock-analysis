@@ -12,10 +12,12 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace COP4365_Project
 {
+    // Form that displays the candlestick stock chart of a selected stock file
     public partial class Form_stockChart : Form_stockLoader
     {
         // Static list of all single Candlestick patterns
         private static List<string> candlestickPatterns = new List<string>{"None", "Bullish", "Bearish", "Neutral", "Marubozu", "Doji", "DragonFly Doji", "Gravestone Doji", "Hammer", "Inverted Hammer"};
+
         // Private BindingList of each SmartCandlestick object, that other objects can bind to when the list changes
         private BindingList<SmartCandlestick> filteredSmartCandlesticksList {  get; set; }
 
@@ -51,7 +53,7 @@ namespace COP4365_Project
             // Set the chart title name
             chart_candlesticks.Titles.Add(Path.GetFileNameWithoutExtension(filePath));
 
-            // Set the combo box source
+            // Set the combo box data source
             comboBox_selectPattern.DataSource = candlestickPatterns;
 
             // Call the filterCandlesticks function to filter the candlesticks by date and set the chart data source
@@ -96,7 +98,7 @@ namespace COP4365_Project
             chart_candlesticks.DataBind();
         }
 
-        // Private member function that annotated a specified candlestick
+        // Private member function that annotates a specified candlestick with a blue rectangle border and blue arrow
         private void annotateCandlestick(int indexOfPoint, SmartCandlestick scs)
         {
             // Create a rectangle annotation and arrow annotation
@@ -112,7 +114,6 @@ namespace COP4365_Project
             annotation.Width = .8;
             annotation.X = indexOfPoint + .6;
             annotation.Y = (double)scs.bottomPrice;
-
             // Set the rectangle annotation style
             annotation.BackColor = Color.Transparent;
             annotation.LineColor = Color.Blue;
@@ -133,7 +134,7 @@ namespace COP4365_Project
             chart_candlesticks.Annotations.Add(arrowAnnotation);
         }
 
-        // Private membert that annotated the corresponding Candlesticks when a pattern is selected or changed
+        // Private membert that annotates the corresponding Candlesticks when a pattern is selected or changed
         private void comboBox_selectPattern_SelectedIndexChanged(object sender, EventArgs e)
         {
             // First clear all the old annotations
@@ -142,8 +143,10 @@ namespace COP4365_Project
             // if the selected pattern is not "None" which is at index 0
             if (comboBox_selectPattern.SelectedIndex != 0)
             {
+                // store the selected index the user selected
                 int selectedPatternIndex = comboBox_selectPattern.SelectedIndex;
 
+                // Iterate over each smartCandlestick in the chart and annotate the ones that are the selected pattern
                 for (int i = 0; i < filteredSmartCandlesticksList.Count; i++)
                 {
                     // Declare variables to track if the candlestick is the selected pattern and store the current candlestick

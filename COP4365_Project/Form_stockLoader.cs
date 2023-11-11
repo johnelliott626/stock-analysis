@@ -11,6 +11,7 @@ using System.Windows.Forms;
 
 namespace COP4365_Project
 {
+    // Stock loader form class that initially loads when project starts
     public partial class Form_stockLoader : Form
     {
         // Private static variable for defining the format of the CSV file headers
@@ -26,7 +27,7 @@ namespace COP4365_Project
         private void button_loadStocks_Click(object sender, EventArgs e)
         {
             // Show the openFileDialog so the user can select a stock to load
-            DialogResult result = openFileDialog_stockLoader.ShowDialog();
+            openFileDialog_stockLoader.ShowDialog();
         }
 
         // Private member helper function to load each candlestick in a file into a list of Candlestick objects
