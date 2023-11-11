@@ -65,10 +65,11 @@ namespace COP4365_Project
             return resultingList;
         }
 
+        // Private member function that executes when a file/s is properly selected
         private void openFileDialog_stockLoader_FileOk(object sender, CancelEventArgs e)
         {
-            OpenFileDialog openFileDialog = (OpenFileDialog)sender;
-            foreach (string filePath in openFileDialog.FileNames)
+            // Iterate over each selected file and create a stock chart for that file
+            foreach (string filePath in openFileDialog_stockLoader.FileNames)
             {
                 // For each file, load the file into a list of Candlesticks and create a stockChart form
                 List<Candlestick> unfilteredCandlesticksList = loadCandlesticks(filePath);

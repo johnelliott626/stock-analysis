@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace COP4365_Project
 {
+    // Class derived from Candlestick, that represents a Smart Candlestick with additional object properties
     internal class SmartCandlestick : Candlestick
     {
         public Decimal range {  get; set; } // Public member to store Candlestick range
@@ -89,6 +90,7 @@ namespace COP4365_Project
             }
             else
             {
+                // else the candlestick in neither
                 isDragonFlyDoji = false;
                 isGravestoneDoji = false;
             }
@@ -106,6 +108,7 @@ namespace COP4365_Project
             }
             else
             {
+                // else the candlestick is neither
                 isHammer = false;
                 isInvertedHammer = false;
             }
