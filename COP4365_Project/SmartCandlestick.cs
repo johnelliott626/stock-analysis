@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace COP4365_Project
 {
     // Class derived from Candlestick, that represents a Smart Candlestick with additional object properties
-    internal class SmartCandlestick : Candlestick
+    public class SmartCandlestick : Candlestick
     {
         public Decimal range {  get; set; } // Public member to store Candlestick range
         public Decimal bodyRange { get; set; } // Public member to store Candlestick body range

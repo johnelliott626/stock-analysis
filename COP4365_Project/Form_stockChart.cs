@@ -18,8 +18,8 @@ namespace COP4365_Project
         // Static list of all single Candlestick patterns
         private static List<string> candlestickPatterns = new List<string>{"None", "Bullish", "Bearish", "Neutral", "Marubozu", "Doji", "DragonFly Doji", "Gravestone Doji", "Hammer", "Inverted Hammer"};
 
-        // Private BindingList of each SmartCandlestick object, that other objects can bind to when the list changes
-        private BindingList<SmartCandlestick> filteredSmartCandlesticksList {  get; set; }
+        // Private List of each SmartCandlestick objects to store those to be displayed on the stock chart
+        private List<SmartCandlestick> filteredSmartCandlesticksList = new List<SmartCandlestick>();
 
         // Private List that contains all Smart Candlesticks in the current stock file including those outside the selected date range
         private List<SmartCandlestick> unfilteredSmartCandlesticksList { get; set; }
@@ -56,9 +56,11 @@ namespace COP4365_Project
             // Set the combo box data source
             comboBox_selectPattern.DataSource = candlestickPatterns;
 
+            // Set the stock chart data source
+            chart_candlesticks.DataSource = filteredSmartCandlesticksList;
+
             // Call the filterCandlesticks function to filter the candlesticks by date and set the chart data source
             filterCandlesticks();
-            
         }
 
         // Private member function that filters the candlestick binding list based on "new" user selected dates
@@ -74,8 +76,8 @@ namespace COP4365_Project
         // Private member function to filter the candlesticks based on user selected dates
         public void filterCandlesticks()
         {
-            // Initialize a new BindingList for the candlesticks member
-            filteredSmartCandlesticksList = new BindingList<SmartCandlestick>();
+            // Clear the old filtered Smart Candlestick list
+            filteredSmartCandlesticksList.Clear();
 
             // Make sure the candlesticks are in range with most recent row to date first in list candlesticks
             foreach (SmartCandlestick scs in unfilteredSmartCandlesticksList)
@@ -93,8 +95,7 @@ namespace COP4365_Project
                 }
             }
 
-            // Set the chart data source to the SmartCandlestick binding list and bind the chart to the data source so the chart updates when list changes
-            chart_candlesticks.DataSource = filteredSmartCandlesticksList;
+            // Manually call the data bind method on the chart, to update it
             chart_candlesticks.DataBind();
         }
 
@@ -190,8 +191,15 @@ namespace COP4365_Project
                     {
                         annotateCandlestick(i, currentCS);
                     }
-                }   
+                }
+
+                // TEST
+                BullishRecognizer b = new BullishRecognizer(1, "bullish");
+                List<int> list = b.recognize(filteredSmartCandlesticksList);
+                int a = list[0];
             }
+
+            
             
         }
     }
