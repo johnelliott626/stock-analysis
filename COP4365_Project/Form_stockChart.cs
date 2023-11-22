@@ -24,6 +24,9 @@ namespace COP4365_Project
         // Private List that contains all Smart Candlesticks in the current stock file including those outside the selected date range
         private List<SmartCandlestick> unfilteredSmartCandlesticksList { get; set; }
 
+        // Private List that contains each Recognizer object
+        private List<Recognizer> recognizersList {  get; set; }
+
 
         // Public member function that initializes the entire form object
         public Form_stockChart(string filePath, List<Candlestick> unfilteredCandlesticksList, DateTime startDate, DateTime endDate)
@@ -53,14 +56,44 @@ namespace COP4365_Project
             // Set the chart title name
             chart_candlesticks.Titles.Add(Path.GetFileNameWithoutExtension(filePath));
 
-            // Set the combo box data source
-            comboBox_selectPattern.DataSource = candlestickPatterns;
+            // Initialize the recognizer list
+            initializeRecognizerList();
+           
+            // Add each pattern to the comboBox
+            foreach (Recognizer recognizer in recognizersList)
+            {
+                comboBox_selectPattern.Items.Add(recognizer.patternName);
+            }
 
             // Set the stock chart data source
             chart_candlesticks.DataSource = filteredSmartCandlesticksList;
 
             // Call the filterCandlesticks function to filter the candlesticks by date and set the chart data source
             filterCandlesticks();
+        }
+
+        // Private member function that initializes the list of Recognizer objects
+        private void initializeRecognizerList()
+        {
+            // Adds each pattern recognizer to the list
+            recognizersList = new List<Recognizer>();
+            recognizersList.Add(new NoneRecognizer());
+            recognizersList.Add(new BullishRecognizer());
+            recognizersList.Add(new BearishRecognizer());
+            recognizersList.Add(new NeutralRecognizer());
+            recognizersList.Add(new MarubozuRecognizer());
+            recognizersList.Add(new DojiRecognizer());
+            recognizersList.Add(new DragonFlyDojiRecognizer());
+            recognizersList.Add(new GravestoneDojiRecognizer());
+            recognizersList.Add(new HammerRecognizer());
+            recognizersList.Add(new InvertedHammerRecognizer());
+            recognizersList.Add(new PeakRecognizer());
+            recognizersList.Add(new ValleyRecognizer());
+            recognizersList.Add(new EngulfingRecognizer());
+            recognizersList.Add(new BullishEngulfingRecognizer());
+            recognizersList.Add(new BearishEngulfingRecognizer());
+            recognizersList.Add(new BullishHaramiRecognizer());
+            recognizersList.Add(new BearishHaramiRecognizer());
         }
 
         // Private member function that filters the candlestick binding list based on "new" user selected dates
@@ -100,7 +133,7 @@ namespace COP4365_Project
         }
 
         // Private member function that annotates a specified candlestick with a blue rectangle border and blue arrow
-        private void annotateCandlestick(int indexOfPoint, SmartCandlestick scs)
+        private void annotateCandlestick(int indexOfPoint, SmartCandlestick scs, string name)
         {
             // Create a rectangle annotation and arrow annotation
             RectangleAnnotation annotation = new RectangleAnnotation();
@@ -135,72 +168,32 @@ namespace COP4365_Project
             chart_candlesticks.Annotations.Add(arrowAnnotation);
         }
 
+        /*private void annotatePatter()
+        {
+            // Name, size
+            // Rectangle annotation by size
+            // Single arrow annotation and test annotation
+
+        }*/
+
         // Private membert that annotates the corresponding Candlesticks when a pattern is selected or changed
         private void comboBox_selectPattern_SelectedIndexChanged(object sender, EventArgs e)
         {
             // First clear all the old annotations
             chart_candlesticks.Annotations.Clear();
 
-            // if the selected pattern is not "None" which is at index 0
-            if (comboBox_selectPattern.SelectedIndex != 0)
+            // store the selected index the user selected
+            int selectedPatternIndex = comboBox_selectPattern.SelectedIndex;
+
+            // Call the Recognize function to get the list of candlesticks to annotate
+            List<int> indicesToAnnotate = recognizersList[selectedPatternIndex].recognize(filteredSmartCandlesticksList);
+
+            foreach (int candlestickIndex in indicesToAnnotate)
             {
-                // store the selected index the user selected
-                int selectedPatternIndex = comboBox_selectPattern.SelectedIndex;
-
-                // Iterate over each smartCandlestick in the chart and annotate the ones that are the selected pattern
-                for (int i = 0; i < filteredSmartCandlesticksList.Count; i++)
-                {
-                    // Declare variables to track if the candlestick is the selected pattern and store the current candlestick
-                    bool isPattern = false;
-                    SmartCandlestick currentCS = filteredSmartCandlesticksList[i];
-
-                    // Find the boolean value of the current candlestick based on the selected pattern
-                    switch(selectedPatternIndex)
-                    {
-                        case 1:
-                            isPattern = currentCS.isBullish;
-                            break;
-                        case 2:
-                            isPattern = currentCS.isBearish;
-                            break;
-                        case 3:
-                            isPattern = currentCS.isNeutral;
-                            break;
-                        case 4:
-                            isPattern = currentCS.isMarubozu;
-                            break;
-                        case 5:
-                            isPattern = currentCS.isDoji;
-                            break;
-                        case 6:
-                            isPattern = currentCS.isDragonFlyDoji;
-                            break;
-                        case 7:
-                            isPattern = currentCS.isGravestoneDoji;
-                            break;
-                        case 8:
-                            isPattern = currentCS.isHammer;
-                            break;
-                        case 9:
-                            isPattern = currentCS.isInvertedHammer;
-                            break;
-                    }
-
-                    // If the current candlestick is the selected pattern, then annotate it
-                    if (isPattern)
-                    {
-                        annotateCandlestick(i, currentCS);
-                    }
-                }
-
-                // TEST
-                BullishRecognizer b = new BullishRecognizer(1, "bullish");
-                List<int> list = b.recognize(filteredSmartCandlesticksList);
-                int a = list[0];
+                annotateCandlestick(candlestickIndex, filteredSmartCandlesticksList[candlestickIndex], recognizersList[selectedPatternIndex].patternName);
             }
 
-            
-            
+
         }
     }
 }

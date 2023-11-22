@@ -73,7 +73,7 @@ namespace COP4365_Project
     public class BullishRecognizer : Recognizer
     {
         // Public constructor that calls the base class constructor to set the patternSize and patternName members
-        public BullishRecognizer(int patternSize, string patternName) : base(patternSize, patternName) { }
+        public BullishRecognizer() : base(1, "Bullish") { }
 
         // Implementation of the abstract class function recognizePattern that returns if the sublist is the specified pattern
         public override bool recognizePattern(List<SmartCandlestick> scsSublist)
@@ -86,7 +86,7 @@ namespace COP4365_Project
     public class BearishRecognizer : Recognizer
     {
         // Public constructor that calls the base class constructor to set the patternSize and patternName members
-        public BearishRecognizer(int patternSize, string patternName) : base(patternSize, patternName) { }
+        public BearishRecognizer() : base(1, "Bearish") { }
 
         // Implementation of the abstract class function recognizePattern that returns if the sublist is the specified pattern
         public override bool recognizePattern(List<SmartCandlestick> scsSublist)
@@ -99,7 +99,7 @@ namespace COP4365_Project
     public class NeutralRecognizer : Recognizer
     {
         // Public constructor that calls the base class constructor to set the patternSize and patternName members
-        public NeutralRecognizer(int patternSize, string patternName) : base(patternSize, patternName) { }
+        public NeutralRecognizer() : base(1, "Neutral") { }
 
         // Implementation of the abstract class function recognizePattern that returns if the sublist is the specified pattern
         public override bool recognizePattern(List<SmartCandlestick> scsSublist)
@@ -112,7 +112,7 @@ namespace COP4365_Project
     public class MarubozuRecognizer : Recognizer
     {
         // Public constructor that calls the base class constructor to set the patternSize and patternName members
-        public MarubozuRecognizer(int patternSize, string patternName) : base(patternSize, patternName) { }
+        public MarubozuRecognizer() : base(1, "Marubozu") { }
 
         // Implementation of the abstract class function recognizePattern that returns if the sublist is the specified pattern
         public override bool recognizePattern(List<SmartCandlestick> scsSublist)
@@ -120,4 +120,211 @@ namespace COP4365_Project
             return scsSublist[0].isMarubozu;
         }
     }
+
+    // Class definition of the recognizer class that inherits the Recognizer base class for the Doji pattern
+    public class DojiRecognizer : Recognizer
+    {
+        // Public constructor that calls the base class constructor to set the patternSize and patternName members
+        public DojiRecognizer() : base(1, "Doji") { }
+
+        // Implementation of the abstract class function recognizePattern that returns if the sublist is the specified pattern
+        public override bool recognizePattern(List<SmartCandlestick> scsSublist)
+        {
+            return scsSublist[0].isDoji;
+        }
+    }
+
+    // Class definition of the recognizer class that inherits the Recognizer base class for the DragonFlyDoji pattern
+    public class DragonFlyDojiRecognizer : Recognizer
+    {
+        // Public constructor that calls the base class constructor to set the patternSize and patternName members
+        public DragonFlyDojiRecognizer() : base(1, "DragonFly Doji") { }
+
+        // Implementation of the abstract class function recognizePattern that returns if the sublist is the specified pattern
+        public override bool recognizePattern(List<SmartCandlestick> scsSublist)
+        {
+            return scsSublist[0].isDragonFlyDoji;
+        }
+    }
+
+    // Class definition of the recognizer class that inherits the Recognizer base class for the GravestoneDoji pattern
+    public class GravestoneDojiRecognizer : Recognizer
+    {
+        // Public constructor that calls the base class constructor to set the patternSize and patternName members
+        public GravestoneDojiRecognizer() : base(1, "Gravestone Doji") { }
+
+        // Implementation of the abstract class function recognizePattern that returns if the sublist is the specified pattern
+        public override bool recognizePattern(List<SmartCandlestick> scsSublist)
+        {
+            return scsSublist[0].isGravestoneDoji;
+        }
+    }
+
+    // Class definition of the recognizer class that inherits the Recognizer base class for the Hammer pattern
+    public class HammerRecognizer : Recognizer
+    {
+        // Public constructor that calls the base class constructor to set the patternSize and patternName members
+        public HammerRecognizer() : base(1, "Hammer") { }
+
+        // Implementation of the abstract class function recognizePattern that returns if the sublist is the specified pattern
+        public override bool recognizePattern(List<SmartCandlestick> scsSublist)
+        {
+            return scsSublist[0].isHammer;
+        }
+    }
+
+    // Class definition of the recognizer class that inherits the Recognizer base class for the InvertedHammer pattern
+    public class InvertedHammerRecognizer : Recognizer
+    {
+        // Public constructor that calls the base class constructor to set the patternSize and patternName members
+        public InvertedHammerRecognizer() : base(1, "Inverted Hammer") { }
+
+        // Implementation of the abstract class function recognizePattern that returns if the sublist is the specified pattern
+        public override bool recognizePattern(List<SmartCandlestick> scsSublist)
+        {
+            return scsSublist[0].isInvertedHammer;
+        }
+    }
+
+    // Class definition of the recognizer class that inherits the Recognizer base class for the Peak pattern
+    public class PeakRecognizer : Recognizer
+    {
+        // Public constructor that calls the base class constructor to set the patternSize and patternName members
+        public PeakRecognizer() : base(3, "Peak") { }
+
+        // Implementation of the abstract class function recognizePattern that returns if the sublist is the specified pattern
+        public override bool recognizePattern(List<SmartCandlestick> scsSublist)
+        {
+            Decimal leftHigh = scsSublist[0].high;
+            Decimal middleHigh = scsSublist[1].high;
+            Decimal rightHigh = scsSublist[2].high;
+
+            return (leftHigh < middleHigh) && (middleHigh > rightHigh);
+        }
+    }
+
+    // Class definition of the recognizer class that inherits the Recognizer base class for the Valley pattern
+    public class ValleyRecognizer : Recognizer
+    {
+        // Public constructor that calls the base class constructor to set the patternSize and patternName members
+        public ValleyRecognizer() : base(3, "Valley") { }
+
+        // Implementation of the abstract class function recognizePattern that returns if the sublist is the specified pattern
+        public override bool recognizePattern(List<SmartCandlestick> scsSublist)
+        {
+            Decimal leftLow = scsSublist[0].low;
+            Decimal middleLow = scsSublist[1].low;
+            Decimal rightLow = scsSublist[2].low;
+
+            return (leftLow > middleLow) && (middleLow < rightLow);
+        }
+    }
+
+    // Class definition of the recognizer class that inherits the Recognizer base class for the Engulfing pattern
+    public class EngulfingRecognizer : Recognizer
+    {
+        // Public constructor that calls the base class constructor to set the patternSize and patternName members
+        public EngulfingRecognizer() : base(2, "Engulfing") { }
+
+        // Implementation of the abstract class function recognizePattern that returns if the sublist is the specified pattern
+        public override bool recognizePattern(List<SmartCandlestick> scsSublist)
+        {
+            SmartCandlestick left = scsSublist[0];
+            SmartCandlestick right = scsSublist[1];
+
+            // Return if sublist is either bullish or bearish engulfing pattern
+            return (left.bottomPrice > right.bottomPrice) && (left.topPrice < right.topPrice);
+        }
+    }
+
+    // Class definition of the recognizer class that inherits the Recognizer base class for the BullishEngulfing pattern
+    public class BullishEngulfingRecognizer : Recognizer
+    {
+        // Public constructor that calls the base class constructor to set the patternSize and patternName members
+        public BullishEngulfingRecognizer() : base(2, "Bullish Engulfing") { }
+
+        // Implementation of the abstract class function recognizePattern that returns if the sublist is the specified pattern
+        public override bool recognizePattern(List<SmartCandlestick> scsSublist)
+        {
+            SmartCandlestick left = scsSublist[0];
+            SmartCandlestick right = scsSublist[1];
+
+            // Return if sublist is the bullish engulfing pattern
+            return (left.isBearish && right.isBullish) && (left.bottomPrice > right.bottomPrice) && (left.topPrice < right.topPrice);
+        }
+    }
+
+    // Class definition of the recognizer class that inherits the Recognizer base class for the BearishEngulfing pattern
+    public class BearishEngulfingRecognizer : Recognizer
+    {
+        // Public constructor that calls the base class constructor to set the patternSize and patternName members
+        public BearishEngulfingRecognizer() : base(2, "Bearish Engulfing") { }
+
+        // Implementation of the abstract class function recognizePattern that returns if the sublist is the specified pattern
+        public override bool recognizePattern(List<SmartCandlestick> scsSublist)
+        {
+            SmartCandlestick left = scsSublist[0];
+            SmartCandlestick right = scsSublist[1];
+
+            // Return if sublist is the bearish engulfing pattern
+            return (left.isBullish && right.isBearish) && (left.bottomPrice > right.bottomPrice) && (left.topPrice < right.topPrice);
+        }
+    }
+
+    // Class definition of the recognizer class that inherits the Recognizer base class for the BullishHarami pattern
+    public class BullishHaramiRecognizer : Recognizer
+    {
+        // Public constructor that calls the base class constructor to set the patternSize and patternName members
+        public BullishHaramiRecognizer() : base(2, "Bullish Harami") { }
+
+        // Implementation of the abstract class function recognizePattern that returns if the sublist is the specified pattern
+        public override bool recognizePattern(List<SmartCandlestick> scsSublist)
+        {
+            SmartCandlestick left = scsSublist[0];
+            SmartCandlestick right = scsSublist[1];
+
+            bool correctColors = left.isBearish && right.isBullish;
+            bool leftEnclosesRight = (left.bottomPrice < right.bottomPrice) && (left.topPrice > right.topPrice);
+            // Gap up is atleast 20% of the left candlestick body range
+            bool gapUp = ((left.bottomPrice + (left.bodyRange * .20M)) < right.bottomPrice);
+ 
+            return correctColors && leftEnclosesRight && gapUp;
+        }
+    }
+
+    // Class definition of the recognizer class that inherits the Recognizer base class for the BearishHarami pattern
+    public class BearishHaramiRecognizer : Recognizer
+    {
+        // Public constructor that calls the base class constructor to set the patternSize and patternName members
+        public BearishHaramiRecognizer() : base(2, "Bearish Harami") { }
+
+        // Implementation of the abstract class function recognizePattern that returns if the sublist is the specified pattern
+        public override bool recognizePattern(List<SmartCandlestick> scsSublist)
+        {
+            SmartCandlestick left = scsSublist[0];
+            SmartCandlestick right = scsSublist[1];
+
+            bool correctColors = left.isBullish && right.isBearish;
+            bool leftEnclosesRight = (left.bottomPrice < right.bottomPrice) && (left.topPrice > right.topPrice);
+            // Gap down is atleast 20% of the left candlestick body range
+            bool gapDown = ((left.topPrice - (left.bodyRange * .20M)) > right.topPrice);
+
+            return correctColors && leftEnclosesRight && gapDown;
+        }
+    }
+
+    // Class definition to represent when no pattern is selected or "None" is selected
+    public class NoneRecognizer : Recognizer
+    {
+        // Public constructor that calls the base class constructor to set the patternSize and patternName members
+        public NoneRecognizer() : base(1, "None") { }
+
+        // Implementation of the abstract class function recognizePattern that returns if the sublist is the specified pattern
+        public override bool recognizePattern(List<SmartCandlestick> scsSublist)
+        {
+            // No Candlestick should be annotated when "None" is selected, so always return false
+            return false;
+        }
+    }
+
 }

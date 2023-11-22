@@ -35,16 +35,16 @@
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart_candlesticks = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.smartCandlestickBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.candlestickBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.button_updateChart = new System.Windows.Forms.Button();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.comboBox_selectPattern = new System.Windows.Forms.ComboBox();
             this.label_selectPattern = new System.Windows.Forms.Label();
-            this.smartCandlestickBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.chart_candlesticks)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.smartCandlestickBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.candlestickBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.smartCandlestickBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // dateTimePicker_endDate
@@ -113,6 +113,10 @@
             this.chart_candlesticks.TabIndex = 1;
             this.chart_candlesticks.Text = "chart1";
             // 
+            // smartCandlestickBindingSource
+            // 
+            this.smartCandlestickBindingSource.DataSource = typeof(COP4365_Project.SmartCandlestick);
+            // 
             // candlestickBindingSource
             // 
             this.candlestickBindingSource.DataSource = typeof(COP4365_Project.Candlestick);
@@ -154,10 +158,6 @@
             this.label_selectPattern.TabIndex = 15;
             this.label_selectPattern.Text = "Select Pattern to Highlight:";
             // 
-            // smartCandlestickBindingSource
-            // 
-            this.smartCandlestickBindingSource.DataSource = typeof(COP4365_Project.SmartCandlestick);
-            // 
             // Form_stockChart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -179,9 +179,9 @@
             this.Controls.SetChildIndex(this.comboBox_selectPattern, 0);
             this.Controls.SetChildIndex(this.label_selectPattern, 0);
             ((System.ComponentModel.ISupportInitialize)(this.chart_candlesticks)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.smartCandlestickBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.candlestickBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.smartCandlestickBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
