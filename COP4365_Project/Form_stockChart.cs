@@ -171,9 +171,21 @@ namespace COP4365_Project
             ArrowAnnotation arrowAnnotation = new ArrowAnnotation();
 
             // Calculate subset values to be used in the annotations
-            double maxHigh = scsSublist.Max(scs => (double)scs.high);
-            double minLow = scsSublist.Min(scs => (double)scs.low);
-            double averageIndex = scsIndices.Average();
+            // Iterate through sublist to find the max High and min Low in the subset of candlesticks
+            double maxHigh = (double)scsSublist[0].high;
+            double minLow = (double)scsSublist[0].low;
+            for (int i = 1; i < scsSublist.Count; i++)
+            {
+                if ((double)scsSublist[i].high > maxHigh)
+                {
+                    maxHigh = (double)scsSublist[i].high;
+                }
+                if ((double)scsSublist[i].low < minLow)
+                {
+                    minLow = (double)scsSublist[i].low;
+                }
+            }
+            double averageIndex = scsIndices.Average();     // Average index that the arrow will use to point to center of the subset
 
             // Set the rectangle annotation position and size to outline the specific Candlestick
             rectangleAnnotation.AxisX = chart_candlesticks.ChartAreas["ChartArea_OHLC"].AxisX;
