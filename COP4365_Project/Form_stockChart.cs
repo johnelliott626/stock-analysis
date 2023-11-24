@@ -65,7 +65,7 @@ namespace COP4365_Project
             // Set the stock chart data source
             chart_candlesticks.DataSource = filteredSmartCandlesticksList;
 
-            // Call the filterCandlesticks function to filter the candlesticks by date and set the chart data source
+            // Call the filterCandlesticks function to filter the candlesticks by date and bind the chart data source
             filterCandlesticks();
         }
 
@@ -125,7 +125,7 @@ namespace COP4365_Project
                 }
             }
 
-            // Manually call the data bind method on the chart, to update it
+            // Manually call the data bind method on the chart
             chart_candlesticks.DataBind();
         }
 
@@ -187,7 +187,7 @@ namespace COP4365_Project
             }
             double averageIndex = scsIndices.Average();     // Average index that the arrow will use to point to center of the subset
 
-            // Set the rectangle annotation position and size to outline the specific Candlestick
+            // Set the rectangle annotation position and size to outline the subset of Candlesticks
             rectangleAnnotation.AxisX = chart_candlesticks.ChartAreas["ChartArea_OHLC"].AxisX;
             rectangleAnnotation.AxisY = chart_candlesticks.ChartAreas["ChartArea_OHLC"].AxisY;
             rectangleAnnotation.IsSizeAlwaysRelative = false;
@@ -201,7 +201,7 @@ namespace COP4365_Project
             rectangleAnnotation.BackColor = Color.Transparent;
             rectangleAnnotation.LineColor = Color.Blue;
 
-            // Set the arrow annotation position to point to the top of the specific Candlestick
+            // Set the arrow annotation position to point to the top of the middle of the subset of Candlesticks
             arrowAnnotation.AxisX = chart_candlesticks.ChartAreas["ChartArea_OHLC"].AxisX;
             arrowAnnotation.AxisY = chart_candlesticks.ChartAreas["ChartArea_OHLC"].AxisY;
             arrowAnnotation.IsSizeAlwaysRelative = false;
