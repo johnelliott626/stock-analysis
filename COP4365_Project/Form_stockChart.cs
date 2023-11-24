@@ -15,9 +15,6 @@ namespace COP4365_Project
     // Form that displays the candlestick stock chart of a selected stock file
     public partial class Form_stockChart : Form_stockLoader
     {
-        // Static list of all single Candlestick patterns
-        private static List<string> candlestickPatterns = new List<string>{"None", "Bullish", "Bearish", "Neutral", "Marubozu", "Doji", "DragonFly Doji", "Gravestone Doji", "Hammer", "Inverted Hammer"};
-
         // Private List of each SmartCandlestick objects to store those to be displayed on the stock chart
         private List<SmartCandlestick> filteredSmartCandlesticksList = new List<SmartCandlestick>();
 
@@ -133,26 +130,24 @@ namespace COP4365_Project
         }
 
         // Private member function that annotates a specified candlestick with a blue rectangle border and blue arrow
-        private void annotateCandlestick(int indexOfPoint, SmartCandlestick scs, string name)
+        private void annotateSingleCandlestick(int indexOfPoint, SmartCandlestick scs)
         {
             // Create a rectangle annotation and arrow annotation
-            RectangleAnnotation annotation = new RectangleAnnotation();
+            RectangleAnnotation rectangleAnnotation = new RectangleAnnotation();
             ArrowAnnotation arrowAnnotation = new ArrowAnnotation();
 
-            
             // Set the rectangle annotation position and size to outline the specific Candlestick
-            annotation.AxisX = chart_candlesticks.ChartAreas["ChartArea_OHLC"].AxisX;
-            annotation.AxisY = chart_candlesticks.ChartAreas["ChartArea_OHLC"].AxisY;
-            annotation.IsSizeAlwaysRelative = false;
-            annotation.Height = (double)scs.bodyRange;
-            annotation.Width = .8;
-            annotation.X = indexOfPoint + .6;
-            annotation.Y = (double)scs.bottomPrice;
+            rectangleAnnotation.AxisX = chart_candlesticks.ChartAreas["ChartArea_OHLC"].AxisX;
+            rectangleAnnotation.AxisY = chart_candlesticks.ChartAreas["ChartArea_OHLC"].AxisY;
+            rectangleAnnotation.IsSizeAlwaysRelative = false;
+            rectangleAnnotation.Height = (double)scs.bodyRange;
+            rectangleAnnotation.Width = .8;
+            rectangleAnnotation.X = indexOfPoint + .6;
+            rectangleAnnotation.Y = (double)scs.bottomPrice;
             // Set the rectangle annotation style
-            annotation.BackColor = Color.Transparent;
-            annotation.LineColor = Color.Blue;
+            rectangleAnnotation.BackColor = Color.Transparent;
+            rectangleAnnotation.LineColor = Color.Blue;
 
-            
             // Set the arrow annotation position to point to the top of the specific Candlestick
             arrowAnnotation.AxisX = chart_candlesticks.ChartAreas["ChartArea_OHLC"].AxisX;
             arrowAnnotation.AxisY = chart_candlesticks.ChartAreas["ChartArea_OHLC"].AxisY;
@@ -164,17 +159,82 @@ namespace COP4365_Project
             arrowAnnotation.LineColor = Color.Blue;
 
             // Add the annotations to the chart
-            chart_candlesticks.Annotations.Add(annotation);
+            chart_candlesticks.Annotations.Add(rectangleAnnotation);
             chart_candlesticks.Annotations.Add(arrowAnnotation);
         }
 
-        /*private void annotatePatter()
+        // Private member function that annotates a specific subset of candlesticks with a blue arrow and rectangle
+        private void annotateMultiCandlestick(int patternSize, List<int> scsIndices, List<SmartCandlestick> scsSublist)
         {
-            // Name, size
-            // Rectangle annotation by size
-            // Single arrow annotation and test annotation
+            // Create a rectangle annotation and arrow annotation
+            RectangleAnnotation rectangleAnnotation = new RectangleAnnotation();
+            ArrowAnnotation arrowAnnotation = new ArrowAnnotation();
 
-        }*/
+            // Calculate subset values to be used in the annotations
+            double maxHigh = scsSublist.Max(scs => (double)scs.high);
+            double minLow = scsSublist.Min(scs => (double)scs.low);
+            double averageIndex = scsIndices.Average();
+
+            // Set the rectangle annotation position and size to outline the specific Candlestick
+            rectangleAnnotation.AxisX = chart_candlesticks.ChartAreas["ChartArea_OHLC"].AxisX;
+            rectangleAnnotation.AxisY = chart_candlesticks.ChartAreas["ChartArea_OHLC"].AxisY;
+            rectangleAnnotation.IsSizeAlwaysRelative = false;
+            rectangleAnnotation.Height = maxHigh - minLow;
+            rectangleAnnotation.Width = patternSize;
+            // The rectangle X starts at the leftmost candlestick in the subset and grows to the right
+            rectangleAnnotation.X = scsIndices[0] + .5;
+            // The rectangle Y starts at the minimum candlestick low in the subset and grows upward
+            rectangleAnnotation.Y = minLow;
+            // Set the rectangle annotation style
+            rectangleAnnotation.BackColor = Color.Transparent;
+            rectangleAnnotation.LineColor = Color.Blue;
+
+            // Set the arrow annotation position to point to the top of the specific Candlestick
+            arrowAnnotation.AxisX = chart_candlesticks.ChartAreas["ChartArea_OHLC"].AxisX;
+            arrowAnnotation.AxisY = chart_candlesticks.ChartAreas["ChartArea_OHLC"].AxisY;
+            arrowAnnotation.IsSizeAlwaysRelative = false;
+            arrowAnnotation.Height = 10000;
+            // The arrow's X value will be in the middle of the candlestick subset that identifies with the pattern
+            arrowAnnotation.X = averageIndex + 1;
+            // The arrow's Y value will be the just above the maximum candlestick high of the subset
+            arrowAnnotation.Y = maxHigh * 1.01;
+            arrowAnnotation.Width = 1;
+            arrowAnnotation.LineColor = Color.Blue;
+
+            // Add the annotations to the chart
+            chart_candlesticks.Annotations.Add(rectangleAnnotation);
+            chart_candlesticks.Annotations.Add(arrowAnnotation);
+        }
+
+        // Private member function that calls functions to annotate either single or multi candlestick patterns
+        private void annotatePattern(int patternSize, int scsIndex)
+        {
+            // If the selected pattern is a single candlestick pattern 
+            if (patternSize == 1)
+            {
+                // Call the function to annotate a single candlestick
+                annotateSingleCandlestick(scsIndex, filteredSmartCandlesticksList[scsIndex]);
+            }
+            // Else the selected pattern is a multi-candlestick pattern
+            else
+            {
+                // Construct the sublist of indices in the mult-candlestick pattern
+                List<int> scsSublistIndices = new List<int>();
+                for (int i = (patternSize - 1); i >= 0; i--)
+                {
+                    scsSublistIndices.Add(scsIndex - i);
+                }
+                // Construct the sublist of SmartCandlestick indices in the multi-candlestick pattern
+                List<SmartCandlestick> scsSublist = new List<SmartCandlestick>();
+                foreach (int i in scsSublistIndices)
+                {
+                    scsSublist.Add(filteredSmartCandlesticksList[i]);
+                }
+
+                // Call the function to annotate a multi-candlestick pattern
+                annotateMultiCandlestick(patternSize, scsSublistIndices, scsSublist);
+            }
+        }
 
         // Private membert that annotates the corresponding Candlesticks when a pattern is selected or changed
         private void comboBox_selectPattern_SelectedIndexChanged(object sender, EventArgs e)
@@ -186,14 +246,14 @@ namespace COP4365_Project
             int selectedPatternIndex = comboBox_selectPattern.SelectedIndex;
 
             // Call the Recognize function to get the list of candlesticks to annotate
-            List<int> indicesToAnnotate = recognizersList[selectedPatternIndex].recognize(filteredSmartCandlesticksList);
+            Recognizer selectedRecognizer = recognizersList[selectedPatternIndex];
+            List<int> indicesToAnnotate = selectedRecognizer.recognize(filteredSmartCandlesticksList);
 
+            // Iterate over each candlestickIndex and call the function to annotate it
             foreach (int candlestickIndex in indicesToAnnotate)
             {
-                annotateCandlestick(candlestickIndex, filteredSmartCandlesticksList[candlestickIndex], recognizersList[selectedPatternIndex].patternName);
+                annotatePattern(selectedRecognizer.patternSize, candlestickIndex);
             }
-
-
         }
     }
 }
